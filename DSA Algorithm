@@ -1,0 +1,42 @@
+import hashlib
+import hmac
+import time
+
+# Function to calculate MD5 hash
+def calculate_md5(data):
+    md5_hash = hashlib.md5()
+    md5_hash.update(data.encode())
+    return md5_hash.hexdigest()
+
+# Function to perform DSA digital signature
+def sign_with_dsa(message, private_key):
+    # Use a random key for illustration purposes; in practice, use a securely generated key
+    key = b'secret_key'
+    
+    # Calculate the HMAC using SHA-256
+    hmac_signature = hmac.new(key, message.encode(), hashlib.sha256).hexdigest()
+    
+    return hmac_signature
+
+# Sample message
+message = "Hello, this is a sample message."
+
+# Calculate MD5 hash and measure time taken
+start_time_md5 = time.time()
+md5_result = calculate_md5(message)
+end_time_md5 = time.time()
+time_taken_md5 = end_time_md5 - start_time_md5
+
+# Calculate DSA digital signature and measure time taken
+start_time_dsa = time.time()
+dsa_result = sign_with_dsa(message, private_key='example_private_key')
+end_time_dsa = time.time()
+time_taken_dsa = end_time_dsa - start_time_dsa
+
+# Print results
+print("MD5 Hash:", md5_result)
+print("Time taken for MD5:", time_taken_md5, "seconds")
+print("\nDSA Digital Signature:", dsa_result)
+print("Time taken for DSA:", time_taken_dsa, "seconds")
+if(time_taken_md5<time_taken_dsa):
+    print("MD5 algorithm takes less time")
